@@ -7,8 +7,9 @@
     "npm": "1.2.x"
   },
   "dependencies": {
+    "ejs": "*",
     "express": "3.x",
-    "zombie": "*",
-    "ejs": "*"
+    "socket.io": "^1.4.5",
+    "zombie": "*"
   }
 }

@@ -1,13 +1,23 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Codefish</title>
+	<title>Codefish</title>
+	<script src="http://127.0.0.1:5001/socket.io/socket.io.js"></script>
+	<script>
+		var socket = io.connect();
+		function login(){
+			socket.emit('login',{name:'test'});
+			console.log('client: login');
+		}
+	</script>
 </head>
 <body>
-<h1>I've entered the Codeship!</h1>
-Deployed using <a href="https://www.codeship.io">codeship.io</a>.<a href="#"></a>
+	<h1>I've entered the Codeship!</h1>
+	Deployed using <a href="https://www.codeship.io">codeship.io</a>.<a href="#"></a>
 
-<h3>change by jason...</h3>
-<h3>change again by jason...</h3>
+	<h3>change by jason...</h3>
+	
+	<br>
+	<button onclick="login();">login</button>
 </body>
 </html>
