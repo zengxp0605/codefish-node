@@ -16,6 +16,7 @@ var server = require('http').Server(app);
   	console.log('io connection [ok]');
   	socket.on('login',function(data){
   		console.log('server login: ',data);
+  		io.sockets.emit('router','Login a user,nickname is: '+ data.nickname);
   	});
   });
 

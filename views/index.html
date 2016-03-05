@@ -1,14 +1,46 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Codefish</title>
-	<script src="http://127.0.0.1:5001/socket.io/socket.io.js"></script>
+	<title>Codefish-Jason</title>
 	<script>
-		var socket = io.connect();
-		function login(){
-			socket.emit('login',{name:'test'});
-			console.log('client: login');
+		window.App = window.App || {};
+		App.domain =window.location.protocol + '//' + window.location.host;
+		App.socketJsFileName = App.domain + '/socket.io/socket.io.js';
+		
+		loadJs(App.socketJsFileName,function(){
+			App.socket = io.connect();
+			App.socket.on('connect',function(){
+				console.log('client: connect [ok]');
+				App.init();
+			})
+		});
+		App.init = function(){
+			this.login = function (){
+				console.log('client: login');
+				console.log(App);
+				if(!App.socket){
+					console.error('Socket is not defined.');
+					return;
+				}
+				var nickname = document.getElementById('nickname').value;
+				App.socket.emit('login',{nickname:nickname});
+			}
+			this.socket.on('router',function(data){
+				console.log('client: router data => ' ,data);
+			});
 		}
+		function loadJs(filename,cb){
+			console.log('client: load js:' ,filename);
+			var fileref = document.createElement('script');
+			fileref.setAttribute("type","text/javascript");
+			fileref.setAttribute("src",filename);
+			document.getElementsByTagName("head")[0].appendChild(fileref);
+			fileref.onload = function(){
+				console.log('client: '+ filename +' onloaded');
+				if(cb)  cb();
+			};
+		}
+		
 	</script>
 </head>
 <body>
@@ -16,8 +48,8 @@
 	Deployed using <a href="https://www.codeship.io">codeship.io</a>.<a href="#"></a>
 
 	<h3>change by jason...</h3>
-	
+	<input type="text" id="nickname" placehold="your nickname" value="test-nick">
 	<br>
-	<button onclick="login();">login</button>
+	<button onclick="App.login();">login</button>
 </body>
 </html>
